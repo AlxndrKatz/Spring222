@@ -1,34 +1,35 @@
-package model;
+package su.soviet.carsMVC.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
+@Table(name = "Car")
 public class Car {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-
+    private Long id;
     @Column
     private String manufacturer;
     @Column
     private String model;
+    @Column
+    private int power;
 
     public Car() {
-
     }
 
-    public Car(long id, String manufacturer, String model) {
-        this.id = id;
+    public Car(String manufacturer, String model, int power) {
         this.manufacturer = manufacturer;
         this.model = model;
+        this.power = power;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -48,12 +49,11 @@ public class Car {
         this.model = model;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "id=" + id +
-                ", manufacturer='" + manufacturer + '\'' +
-                ", model='" + model + '\'' +
-                '}';
+    public int getPower() {
+        return power;
+    }
+
+    public void setPower(int power) {
+        this.power = power;
     }
 }
