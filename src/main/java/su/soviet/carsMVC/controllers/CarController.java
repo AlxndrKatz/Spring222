@@ -19,11 +19,9 @@ public class CarController {
 
     @GetMapping("/cars")
     public void getListOfCars(@RequestParam(value = "count", required = false) Long count,
+                              @RequestParam(value = "sortBy", required = false) String sort,
                               Model model) {
-        if (count != null) {
-            model.addAttribute("cars", service.getCarsByCount(count));
-        } else  {
-            model.addAttribute("cars", service.getAllCars());
-        }
+
+        model.addAttribute("cars", service.getCars(count, sort));
     }
 }
