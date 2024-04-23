@@ -21,7 +21,6 @@ public class CarServiceImpl implements CarService{
 
     @Override
     public List<Car> getCars(Long count, String sort) {
-        List<Car> cars;
         if (count != null && sort != null) {
             return getCarsByCountSorted(count, sort);
         }
@@ -31,10 +30,7 @@ public class CarServiceImpl implements CarService{
         if (sort != null) {
             return getCarsSorted(sort);
         }
-        else {
-            cars = getAllCars();
-        }
-        return cars;
+        return getAllCars();
     }
 
     @Override
