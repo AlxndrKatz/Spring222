@@ -15,4 +15,7 @@ spring:
       org.hibernate: DEBUG
   car:
     maxCars: 5
-    enableSortingFields: manufacturer, model, power
+    enableSortingFields:
+      - manufacturer
+      - model
+      - power
