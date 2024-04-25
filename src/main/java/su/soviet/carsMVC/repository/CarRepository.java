@@ -10,7 +10,8 @@ import java.util.List;
 
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
-    @Query(nativeQuery = true, value = "SELECT * FROM Car " +
+    @Query(nativeQuery = true, value =
+            "SELECT * FROM Car " +
             "ORDER BY " +
             "CASE WHEN :sort = 'id' THEN Car.id END ASC, " +
             "CASE WHEN :sort = 'manufacturer' THEN Car.manufacturer END ASC, " +
