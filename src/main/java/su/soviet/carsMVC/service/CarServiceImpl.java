@@ -28,18 +28,8 @@ public class CarServiceImpl implements CarService{
     public List<Car> getCars(Long count, String sort) {
 
         count = checkCount(count);
-
-        if (sort == null) {
-            return repo.findAll(PageRequest.of(0,
-                            Math.toIntExact(count))).getContent();
-        }
-        if (!Arrays.asList(carConfig.getEnableSortingFields())
-                .contains(sort)) {
-            throw new CarSortException();
-        }
-        return repo.findAll(PageRequest.of(0,
-                Math.toIntExact(count), Sort.by(Sort.Order.asc(sort))))
-                .getContent();
+        sort = checkSort(sort);
+        return applyValidParams(count, sort);
     }
 
     private Long checkCount(Long count) {
@@ -47,5 +37,29 @@ public class CarServiceImpl implements CarService{
             count = (long) Integer.MAX_VALUE;
         }
         return count;
+    }
+
+    private String checkSort(String sort) {
+        if (sort == null) {
+            return null;
+        }
+        if (!Arrays.asList(carConfig.getEnableSortingFields()).contains(sort)) {
+            throw new CarSortException();
+        }
+        return sort;
+    }
+
+    private List<Car> applyValidParams(Long count, String sort) {
+        if (sort == null) {
+            return repo
+                    .findAll(PageRequest
+                            .of(0, Math.toIntExact(count)))
+                    .getContent();
+        } else {
+            return repo
+                    .findAll(PageRequest
+                            .of(0, Math.toIntExact(count), Sort.by(Sort.Order.asc(sort))))
+                    .getContent();
+        }
     }
 }
