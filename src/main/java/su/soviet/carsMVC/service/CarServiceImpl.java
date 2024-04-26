@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @PropertySource("application.yml")
-public class CarServiceImpl implements CarService{
+public class CarServiceImpl implements CarService {
 
     @Autowired
     CarConfig carConfig;
@@ -29,7 +29,16 @@ public class CarServiceImpl implements CarService{
 
         count = checkCount(count);
         sort = checkSort(sort);
-        return applyValidParams(count, sort);
+        if (sort == null) {
+            return repo
+                    .findAll(PageRequest
+                            .of(0, Math.toIntExact(count)))
+                    .getContent();
+        }
+        return repo
+                .findAll(PageRequest
+                        .of(0, Math.toIntExact(count), Sort.by(Sort.Order.asc(sort))))
+                .getContent();
     }
 
     private Long checkCount(Long count) {
@@ -47,19 +56,5 @@ public class CarServiceImpl implements CarService{
             throw new CarSortException();
         }
         return sort;
-    }
-
-    private List<Car> applyValidParams(Long count, String sort) {
-        if (sort == null) {
-            return repo
-                    .findAll(PageRequest
-                            .of(0, Math.toIntExact(count)))
-                    .getContent();
-        } else {
-            return repo
-                    .findAll(PageRequest
-                            .of(0, Math.toIntExact(count), Sort.by(Sort.Order.asc(sort))))
-                    .getContent();
-        }
     }
 }
