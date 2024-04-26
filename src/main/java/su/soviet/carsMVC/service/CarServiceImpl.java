@@ -27,9 +27,8 @@ public class CarServiceImpl implements CarService{
     @Override
     public List<Car> getCars(Long count, String sort) {
 
-        if (count == null || count == 0 || count > carConfig.getMaxCars()) {
-            count = (long) Integer.MAX_VALUE;
-        }
+        count = checkCount(count);
+
         if (sort == null) {
             return repo.findAll(PageRequest.of(0,
                             Math.toIntExact(count))).getContent();
@@ -41,5 +40,12 @@ public class CarServiceImpl implements CarService{
         return repo.findAll(PageRequest.of(0,
                 Math.toIntExact(count), Sort.by(Sort.Order.asc(sort))))
                 .getContent();
+    }
+
+    private Long checkCount(Long count) {
+        if (count == null || count == 0 || count > carConfig.getMaxCars()) {
+            count = (long) Integer.MAX_VALUE;
+        }
+        return count;
     }
 }
