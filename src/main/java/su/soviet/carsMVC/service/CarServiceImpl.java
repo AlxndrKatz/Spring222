@@ -1,13 +1,8 @@
 package su.soviet.carsMVC.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import su.soviet.carsMVC.config.CarConfig;
@@ -15,7 +10,6 @@ import su.soviet.carsMVC.exceptions.CarSortException;
 import su.soviet.carsMVC.model.Car;
 import su.soviet.carsMVC.repository.CarRepository;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
